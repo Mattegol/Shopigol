@@ -18,4 +18,11 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Shopigol.Core\Shopigol.Core.csproj" />
+    <ProjectReference Include="..\Shopigol.DataAccess.InMemory\Shopigol.DataAccess.InMemory.csproj" />
+    <ProjectReference Include="..\Shopigol.DataAccess.SQL\Shopigol.DataAccess.SQL.csproj" />
+    <ProjectReference Include="..\Shopigol.Services\Shopigol.Services.csproj" />
+  </ItemGroup>
+
 </Project>

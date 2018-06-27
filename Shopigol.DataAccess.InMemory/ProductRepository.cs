@@ -8,7 +8,7 @@ namespace Shopigol.DataAccess.InMemory
 {
     public class ProductRepository
     {
-        readonly ObjectCache _cache = new MemoryCache("ProductList");
+        readonly ObjectCache _cache = MemoryCache.Default;
         private readonly List<Product> _products;
 
         public ProductRepository()
