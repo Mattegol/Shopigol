@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopigol.Core.Models;
+using Shopigol.Core.ViewModels;
 using Shopigol.DataAccess.InMemory;
 using System.Linq;
 
@@ -8,10 +9,13 @@ namespace Shopigol.WebUI.Controllers
     public class ProductManagerController : Controller
     {
         private readonly ProductRepository _productRepository;
+        private readonly ProductCategoryRepository _productCategoryRepository;
+
 
         public ProductManagerController()
         {
             _productRepository = new ProductRepository();
+            _productCategoryRepository = new ProductCategoryRepository();
         }
 
 
@@ -24,9 +28,14 @@ namespace Shopigol.WebUI.Controllers
 
         public IActionResult Create()
         {
-            var product = new Product();
+            var viewModel = new ProductManagerViewModel
+            {
+                Product = new Product(),
+                ProductCategories = _productCategoryRepository.Collection()
+            };
 
-            return View(product);
+
+            return View(viewModel);
         }
 
         [HttpPost]
@@ -52,7 +61,13 @@ namespace Shopigol.WebUI.Controllers
                 return NotFound();
             }
 
-            return View(productToEdit);
+            var viewModel = new ProductManagerViewModel
+            {
+                Product = productToEdit,
+                ProductCategories = _productCategoryRepository.Collection()
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
