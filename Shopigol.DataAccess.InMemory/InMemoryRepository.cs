@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Shopigol.Core.Contracts;
+using Shopigol.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
-using System.Text;
-using Shopigol.Core.Models;
 
 namespace Shopigol.DataAccess.InMemory
 {
-    public class InMemoryRepository<T> where T : BaseEntity
+    public class InMemoryRepository<T> : IRepository<T> where T : BaseEntity
     {
         private readonly ObjectCache _cache = MemoryCache.Default;
         private readonly List<T> _items;

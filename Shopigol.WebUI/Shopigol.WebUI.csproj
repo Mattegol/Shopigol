@@ -10,6 +10,9 @@
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.3" PrivateAssets="All" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" PrivateAssets="All" />
+    <PackageReference Include="Unity.Container" Version="5.8.6" />
+    <PackageReference Include="Unity.Microsoft.DependencyInjection" Version="2.0.10" />
+    <PackageReference Include="Unity.Mvc" Version="5.0.13" />
   </ItemGroup>
 
   <ItemGroup>

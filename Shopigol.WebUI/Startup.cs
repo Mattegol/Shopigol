@@ -8,9 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shopigol.Core.Contracts;
+using Shopigol.Core.Models;
+using Shopigol.DataAccess.InMemory;
 using Shopigol.WebUI.Data;
 using Shopigol.WebUI.Models;
 using Shopigol.WebUI.Services;
+using Unity;
 
 namespace Shopigol.WebUI
 {
@@ -63,6 +67,13 @@ namespace Shopigol.WebUI
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+        }
+
+        public void ConfigureContainer(IUnityContainer container)
+        {
+            // Could be used to register more types
+            container.RegisterType<IRepository<Product>, InMemoryRepository<Product>>();
+            container.RegisterType<IRepository<ProductCategory>, InMemoryRepository<ProductCategory>>();
         }
     }
 }

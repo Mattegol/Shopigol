@@ -1,22 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Shopigol.Core.Contracts;
 using Shopigol.Core.Models;
-using Shopigol.DataAccess.InMemory;
+using System.Linq;
 
 namespace Shopigol.WebUI.Controllers
 {
     public class ProductCategoryManagerController : Controller
     {
-        private readonly InMemoryRepository<ProductCategory> _productCategoryRepository;
+        private readonly IRepository<ProductCategory> _productCategoryRepository;
 
-        public ProductCategoryManagerController()
+        public ProductCategoryManagerController(IRepository<ProductCategory> productCategoryRepository)
         {
-            _productCategoryRepository = new InMemoryRepository<ProductCategory>();
+            _productCategoryRepository = productCategoryRepository;
         }
-
 
         public IActionResult Index()
         {
@@ -73,7 +69,7 @@ namespace Shopigol.WebUI.Controllers
             }
 
             productCategoryToEdit.Category = productCategory.Category;
-         
+
 
             _productCategoryRepository.Commit();
 
