@@ -8,14 +8,13 @@ namespace Shopigol.WebUI.Controllers
 {
     public class ProductManagerController : Controller
     {
-        private readonly ProductRepository _productRepository;
-        private readonly ProductCategoryRepository _productCategoryRepository;
-
+        private readonly InMemoryRepository<Product> _productRepository;
+        private readonly InMemoryRepository<ProductCategory> _productCategoryRepository;
 
         public ProductManagerController()
         {
-            _productRepository = new ProductRepository();
-            _productCategoryRepository = new ProductCategoryRepository();
+            _productRepository = new InMemoryRepository<Product>();
+            _productCategoryRepository = new InMemoryRepository<ProductCategory>();
         }
 
 
