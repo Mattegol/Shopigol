@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Shopigol.Core.Contracts;
 using Shopigol.Core.Models;
 using Shopigol.DataAccess.InMemory;
+using Shopigol.DataAccess.SQL;
 using Shopigol.WebUI.Data;
 using Shopigol.WebUI.Models;
 using Shopigol.WebUI.Services;
@@ -32,6 +33,7 @@ namespace Shopigol.WebUI
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
