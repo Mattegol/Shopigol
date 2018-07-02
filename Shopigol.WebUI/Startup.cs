@@ -13,6 +13,7 @@ using Shopigol.Core.Models;
 using Shopigol.DataAccess.InMemory;
 using Shopigol.DataAccess.SQL;
 using Shopigol.WebUI.Data;
+using Shopigol.WebUI.Data.Repositories;
 using Shopigol.WebUI.Models;
 using Shopigol.WebUI.Services;
 using Unity;
@@ -74,8 +75,8 @@ namespace Shopigol.WebUI
         public void ConfigureContainer(IUnityContainer container)
         {
             // Could be used to register more types
-            container.RegisterType<IRepository<Product>, InMemoryRepository<Product>>();
-            container.RegisterType<IRepository<ProductCategory>, InMemoryRepository<ProductCategory>>();
+            container.RegisterType<IRepository<Product>, SqlRepository<Product>>();
+            container.RegisterType<IRepository<ProductCategory>, SqlRepository<ProductCategory>>();
         }
     }
 }
