@@ -1,14 +1,16 @@
-﻿using System;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Shopigol.Core.Contracts;
 using Shopigol.Core.Models;
+using Shopigol.Core.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Shopigol.Services
 {
-    public class BasketService
+    public class BasketService : IBasketService
     {
-        private IRepository<Product> _productRepository;
+        private readonly IRepository<Product> _productRepository;
         private readonly IRepository<Basket> _basketRepository;
 
         public const string BasketSessionName = "eCommerceBasket";
@@ -92,6 +94,45 @@ namespace Shopigol.Services
 
             basket.BasketItems.Remove(item);
             _basketRepository.Commit();
+        }
+
+        public List<BasketItemViewModel> GetBasketItems(HttpContext httpContext)
+        {
+            var basket = GetBasket(httpContext, createIfNull: false);
+
+            if (basket == null) return new List<BasketItemViewModel>();
+
+            return (from b in basket.BasketItems
+                    join p in _productRepository.Collection() on b.ProductId equals p.Id
+                    select new BasketItemViewModel
+                    {
+                        Id = b.Id,
+                        Quantity = b.Quantity,
+                        ProductName = p.Name,
+                        Image = p.Image,
+                        Price = p.Price
+                    }).ToList();
+        }
+
+        public BasketSummaryViewModel GetBasketSummary(HttpContext httpContext)
+        {
+            var basket = GetBasket(httpContext, createIfNull: false);
+
+            var viewModel = new BasketSummaryViewModel(0, 0);
+
+            if (basket == null) return viewModel;
+
+            int? basketCount = (from item in basket.BasketItems
+                select item.Quantity).Sum();
+
+            decimal? basketTotal = (from item in basket.BasketItems
+                join p in _productRepository.Collection() on item.ProductId equals p.Id
+                select item.Quantity * p.Price).Sum();
+
+            viewModel.BasketCount = (int) basketCount;
+            viewModel.BasketTotal = (decimal) basketTotal;
+
+            return viewModel;
         }
     }
 }
