@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Shopigol.Core.Contracts;
 using Shopigol.Core.Models;
 using Shopigol.Core.ViewModels;
-using Shopigol.DataAccess.InMemory;
+using System.IO;
 using System.Linq;
 
 namespace Shopigol.WebUI.Controllers
@@ -11,13 +13,16 @@ namespace Shopigol.WebUI.Controllers
     {
         private readonly IRepository<Product> _productRepository;
         private readonly IRepository<ProductCategory> _productCategoryRepository;
+        private readonly IHostingEnvironment _environment;
 
-        public ProductManagerController(IRepository<Product> productRepository, IRepository<ProductCategory> productCategoryRepository)
+        public ProductManagerController(IRepository<Product> productRepository,
+            IRepository<ProductCategory> productCategoryRepository,
+            IHostingEnvironment environment)
         {
             _productRepository = productRepository;
             _productCategoryRepository = productCategoryRepository;
+            _environment = environment;
         }
-
 
         public IActionResult Index()
         {
@@ -34,16 +39,29 @@ namespace Shopigol.WebUI.Controllers
                 ProductCategories = _productCategoryRepository.Collection()
             };
 
-
             return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Create(Product product)
+        public IActionResult Create(Product product, IFormFile file)
         {
             if (!ModelState.IsValid)
             {
                 return View(product);
+            }
+
+            if (file != null)
+            {
+                product.Image = product.Id + Path.GetExtension(file.FileName);
+
+                var uploadsDirectoryPath = Path.Combine(_environment.WebRootPath, "images");
+                var uploadedfilePath = Path.Combine(uploadsDirectoryPath, product.Image);
+
+                using (var stream = new FileStream(uploadedfilePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
             }
 
             _productRepository.Add(product);
@@ -71,7 +89,7 @@ namespace Shopigol.WebUI.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(Product product)
+        public IActionResult Edit(Product product, IFormFile file)
         {
             var productToEdit = _productRepository.Find(product.Id);
             if (productToEdit == null)
@@ -81,13 +99,31 @@ namespace Shopigol.WebUI.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View(product);
+                var viewModel = new ProductManagerViewModel
+                {
+                    Product = productToEdit,
+                    ProductCategories = _productCategoryRepository.Collection()
+                };
+                return View(viewModel);
+            }
+
+            if (file != null)
+            {
+                productToEdit.Image = product.Id + Path.GetExtension(file.FileName);
+
+                var uploadsDirectoryPath = Path.Combine(_environment.WebRootPath, "images");
+                var uploadedfilePath = Path.Combine(uploadsDirectoryPath, productToEdit.Image);
+
+                using (var stream = new FileStream(uploadedfilePath, FileMode.Create))
+                {
+                    file.CopyTo(stream);
+                }
+
             }
 
             productToEdit.Name = product.Name;
             productToEdit.Category = product.Category;
             productToEdit.Description = product.Description;
-            productToEdit.Image = product.Image;
             productToEdit.Price = product.Price;
 
             _productRepository.Commit();

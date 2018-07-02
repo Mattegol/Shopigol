@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" asp-controller="ProductManager" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
@@ -34,14 +34,11 @@
 
                 <select asp-for="Product.Category"
                         asp-items="@(new SelectList(Model.ProductCategories, "Category", "Category"))" class="form-control"></select>
-
-                @*<span asp-validation-for="Product.Category" class="text-danger"></span>*@
             </div>
-
             <div class="form-group">
                 <label asp-for="Product.Image" class="control-label"></label>
-                <input asp-for="Product.Image" class="form-control" />
-                <span asp-validation-for="Product.Image" class="text-danger"></span>
+                <input type="file" id="file" name="file" class="form-control" />
+                @*<span asp-validation-for="Product.Image" class="text-danger"></span>*@
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
