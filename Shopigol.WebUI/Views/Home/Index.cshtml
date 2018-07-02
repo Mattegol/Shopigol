@@ -1,4 +1,5 @@
-﻿@model IEnumerable<Shopigol.Core.Models.Product>
+﻿@using Microsoft.AspNetCore.Http
+@model Shopigol.Core.ViewModels.ProductListViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -6,24 +7,53 @@
 
 <h1>Products</h1>
 
-@foreach (var product in Model)
-{
-    <div class="col-md-4" style="height: 450px; padding: 10px; margin: 10px; border: solid thin whitesmoke;">
-        <div class="col-md-12">
-            <img class="img-responsive" style="height: 250px;" src="/images/@product.Image" alt="Product Image" />
-        </div>
-        <div class="col-md-12">
-            <strong><a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id">@product.Name</a></strong>
-        </div>
-        <div class="col-md-12">
-            <p>@product.Description</p>
-        </div>
-        <div class="col-md-12">
-            <h4>@product.Price</h4>
-        </div>
-        <div class="col-md-12">
-            <a href="#" class="btn btn-default">Add to Basket</a>
-        </div>
+<div class="col-md-2">
+    <h4>Filter by Category</h4>
+    <div class="list-group">
+
+        @if (Context.Request.Query["category"].Any())
+        {
+            <a asp-action="Index" class="list-group-item">All</a>
+        }
+        else
+        {
+            <a asp-action="Index" class="list-group-item active">All</a>
+        }
+        @foreach (var category in Model.ProductCategories)
+        {
+            if (Context.Request.Query["category"] == category.Category)
+            {
+                <a asp-action="Index" asp-route-category="@category.Category" class="list-group-item active">@category.Category</a>
+            }
+            else
+            {
+                <a asp-action="Index" asp-route-category="@category.Category" class="list-group-item">@category.Category</a>
+            }
+
+        }
     </div>
-}
+</div>
+<div class="col-md-10">
+    @foreach (var product in Model.Products)
+    {
+        <div class="col-md-4" style="height: 450px; padding: 10px; margin: 10px; border: solid thin whitesmoke;">
+            <div class="col-md-12">
+                <img class="img-responsive" style="height: 250px;" src="/images/@product.Image" alt="Product Image" />
+            </div>
+            <div class="col-md-12">
+                <strong><a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id">@product.Name</a></strong>
+            </div>
+            <div class="col-md-12">
+                <p>@product.Description</p>
+            </div>
+            <div class="col-md-12">
+                <h4>@product.Price</h4>
+            </div>
+            <div class="col-md-12">
+                <a href="#" class="btn btn-default">Add to Basket</a>
+            </div>
+        </div>
+    }
+</div>
+
 <div class="col-md-12 clearfix"></div>

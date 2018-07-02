@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Shopigol.Core.Contracts;
 using Shopigol.Core.Models;
+using Shopigol.Core.ViewModels;
 using Shopigol.WebUI.Models;
 using System.Diagnostics;
 using System.Linq;
@@ -19,10 +20,19 @@ namespace Shopigol.WebUI.Controllers
             _productCategoryRepository = productCategoryRepository;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string category = null)
         {
-            var products = _productRepository.Collection().ToList();
-            return View(products);
+
+            var products = category == null
+                ? _productRepository.Collection().ToList() : _productRepository.Collection().Where(p => p.Category == category).ToList();
+
+            var viewModel = new ProductListViewModel
+            {
+                Products = products,
+                ProductCategories = _productCategoryRepository.Collection().ToList()
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Details(string id)
