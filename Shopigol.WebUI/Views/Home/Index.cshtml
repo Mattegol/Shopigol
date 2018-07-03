@@ -1,5 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
-@model Shopigol.Core.ViewModels.ProductListViewModel
+﻿@model Shopigol.Core.ViewModels.ProductListViewModel
 
 @{
     ViewData["Title"] = "Home Page";
@@ -34,26 +33,12 @@
     </div>
 </div>
 <div class="col-md-10">
+
     @foreach (var product in Model.Products)
     {
-        <div class="col-md-4" style="height: 450px; padding: 10px; margin: 10px; border: solid thin whitesmoke;">
-            <div class="col-md-12">
-                <img class="img-responsive" style="height: 250px;" src="/images/@product.Image" alt="Product Image" />
-            </div>
-            <div class="col-md-12">
-                <strong><a asp-controller="Home" asp-action="Details" asp-route-id="@product.Id">@product.Name</a></strong>
-            </div>
-            <div class="col-md-12">
-                <p>@product.Description</p>
-            </div>
-            <div class="col-md-12">
-                <h4>@product.Price</h4>
-            </div>
-            <div class="col-md-12">
-                <a href="#" class="btn btn-default">Add to Basket</a>
-            </div>
-        </div>
+        @Html.Partial("_Summary", product)
     }
+
 </div>
 
 <div class="col-md-12 clearfix"></div>

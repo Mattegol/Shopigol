@@ -14,9 +14,9 @@ namespace Shopigol.Services
         private readonly IRepository<Basket> _basketRepository;
 
         public const string BasketSessionName = "eCommerceBasket";
-        private readonly object key;
 
-        public BasketService(IRepository<Product> productRepository, IRepository<Basket> basketRepository)
+        public BasketService(IRepository<Product> productRepository,
+            IRepository<Basket> basketRepository)
         {
             _productRepository = productRepository;
             _basketRepository = basketRepository;
@@ -28,11 +28,22 @@ namespace Shopigol.Services
 
             var basket = new Basket();
 
-            var basketId = cookie;
-
-            if (!string.IsNullOrEmpty(basketId))
+            if (cookie != null)
             {
-                basket = _basketRepository.Find(basketId);
+                var basketId = cookie;
+
+                if (!string.IsNullOrEmpty(basketId))
+                {
+                    basket = _basketRepository.Find(basketId);
+
+                }
+                else
+                {
+                    if (createIfNull)
+                    {
+                        basket = CreateNewBasket(httpContext);
+                    }
+                }
             }
             else
             {
@@ -57,7 +68,7 @@ namespace Shopigol.Services
                 Expires = DateTimeOffset.Now.AddDays(1)
             };
 
-            httpContext.Response.Cookies.Append("CookieKey", BasketSessionName, option);
+            httpContext.Response.Cookies.Append(BasketSessionName, basket.Id, option);
 
             return basket;
         }
@@ -102,16 +113,18 @@ namespace Shopigol.Services
 
             if (basket == null) return new List<BasketItemViewModel>();
 
-            return (from b in basket.BasketItems
-                    join p in _productRepository.Collection() on b.ProductId equals p.Id
-                    select new BasketItemViewModel
-                    {
-                        Id = b.Id,
-                        Quantity = b.Quantity,
-                        ProductName = p.Name,
-                        Image = p.Image,
-                        Price = p.Price
-                    }).ToList();
+            var results = (from b in basket.BasketItems
+                           join p in _productRepository.Collection() on b.ProductId equals p.Id
+                           select new BasketItemViewModel
+                           {
+                               Id = b.Id,
+                               Quantity = b.Quantity,
+                               ProductName = p.Name,
+                               Image = p.Image,
+                               Price = p.Price
+                           }).ToList();
+
+            return results;
         }
 
         public BasketSummaryViewModel GetBasketSummary(HttpContext httpContext)
@@ -123,14 +136,14 @@ namespace Shopigol.Services
             if (basket == null) return viewModel;
 
             int? basketCount = (from item in basket.BasketItems
-                select item.Quantity).Sum();
+                                select item.Quantity).Sum();
 
             decimal? basketTotal = (from item in basket.BasketItems
-                join p in _productRepository.Collection() on item.ProductId equals p.Id
-                select item.Quantity * p.Price).Sum();
+                                    join p in _productRepository.Collection() on item.ProductId equals p.Id
+                                    select item.Quantity * p.Price).Sum();
 
-            viewModel.BasketCount = (int) basketCount;
-            viewModel.BasketTotal = (decimal) basketTotal;
+            viewModel.BasketCount = (int)basketCount;
+            viewModel.BasketTotal = (decimal)basketTotal;
 
             return viewModel;
         }

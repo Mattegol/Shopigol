@@ -1,0 +1,6 @@
+﻿@model Shopigol.Core.ViewModels.BasketSummaryViewModel
+
+<ul class="nav navbar-nav navbar-right">
+    <li><a asp-action="Index" asp-controller="Basket">@Model.BasketCount items</a></li>
+    <li><a asp-action="Index" asp-controller="Basket">@string.Format("{0:c}", Model.BasketTotal)</a></li>
+</ul>

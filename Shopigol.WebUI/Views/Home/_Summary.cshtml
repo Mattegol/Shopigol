@@ -1,0 +1,19 @@
+﻿@model Shopigol.Core.Models.Product
+
+<div class="col-md-4" style="height: 450px; padding: 10px; margin: 10px; border: solid thin whitesmoke;">
+    <div class="col-md-12">
+        <img class="img-responsive" style="height: 250px;" src="/images/@Model.Image" alt="Product Image" />
+    </div>
+    <div class="col-md-12">
+        <strong><a asp-controller="Home" asp-action="Details" asp-route-id="@Model.Id">@Model.Name</a></strong>
+    </div>
+    <div class="col-md-12">
+        <p>@Model.Description</p>
+    </div>
+    <div class="col-md-12">
+        <h4>@Model.Price</h4>
+    </div>
+    <div class="col-md-12">
+        <a asp-action="AddtoBasket" asp-controller="Basket" asp-route-id="@Model.Id" class="btn btn-default">Add to Basket</a>
+    </div>
+</div>

@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -35,6 +36,9 @@
                     <li><a asp-area="" asp-controller="ProductCategoryManager" asp-action="Index">Category Admin</a></li>
                 </ul>
                 @await Html.PartialAsync("_LoginPartial")
+
+                @await Component.InvokeAsync("BasketSummary")
+
             </div>
         </div>
     </nav>
@@ -42,7 +46,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; 2018 - Shopigol</p>
+            <p>&copy; @DateTime.Now.Year - Shopigol</p>
         </footer>
     </div>
 
