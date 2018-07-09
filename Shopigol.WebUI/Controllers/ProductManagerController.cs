@@ -47,7 +47,12 @@ namespace Shopigol.WebUI.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(product);
+                var viewModel = new ProductManagerViewModel
+                {
+                    Product = product,
+                    ProductCategories = _productCategoryRepository.Collection()
+                };
+                return View(viewModel);
             }
 
             if (file != null)
@@ -61,7 +66,6 @@ namespace Shopigol.WebUI.Controllers
                 {
                     file.CopyTo(stream);
                 }
-
             }
 
             _productRepository.Add(product);
@@ -118,7 +122,6 @@ namespace Shopigol.WebUI.Controllers
                 {
                     file.CopyTo(stream);
                 }
-
             }
 
             productToEdit.Name = product.Name;

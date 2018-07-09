@@ -70,7 +70,6 @@ namespace Shopigol.WebUI.Controllers
 
             productCategoryToEdit.Category = productCategory.Category;
 
-
             _productCategoryRepository.Commit();
 
             return RedirectToAction("Index");

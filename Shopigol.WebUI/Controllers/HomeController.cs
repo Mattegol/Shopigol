@@ -22,7 +22,6 @@ namespace Shopigol.WebUI.Controllers
 
         public IActionResult Index(string category = null)
         {
-
             var products = category == null
                 ? _productRepository.Collection().ToList() : _productRepository.Collection().Where(p => p.Category == category).ToList();
 
