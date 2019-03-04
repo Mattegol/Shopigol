@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.AspNetCore;
+﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Shopigol.WebUI.Data;
+using System;
 using Unity.Microsoft.DependencyInjection;
 
 namespace Shopigol.WebUI
@@ -37,7 +37,7 @@ namespace Shopigol.WebUI
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseUnityServiceProvider()
+                //.UseUnityServiceProvider()
                 .UseStartup<Startup>()
                 .Build();
     }

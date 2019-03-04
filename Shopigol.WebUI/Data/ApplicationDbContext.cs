@@ -20,6 +20,8 @@ namespace Shopigol.WebUI.Data
 
         public DbSet<BasketItem> BasketItems { get; set; }
 
+        public DbSet<Customer> Customers { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
