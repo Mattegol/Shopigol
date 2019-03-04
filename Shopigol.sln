@@ -13,7 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopigol.DataAccess.InMemor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopigol.WebUI", "Shopigol.WebUI\Shopigol.WebUI.csproj", "{719CECA1-ED92-4A28-80B4-304A97D909E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopigol.Tests", "Shopigol.Tests\Shopigol.Tests.csproj", "{9254A740-C786-4C7A-894A-01BCC0F7EF96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopigol.Tests", "Shopigol.Tests\Shopigol.Tests.csproj", "{9254A740-C786-4C7A-894A-01BCC0F7EF96}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shopigol.Integration.Tests", "Shopigol.Integration.Tests\Shopigol.Integration.Tests.csproj", "{4C47FE0C-9F97-403C-8A9F-BA820581FF81}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shopigol.WebUI.Tests", "Shopigol.WebUI.Tests\Shopigol.WebUI.Tests.csproj", "{368E618F-4A97-40E1-B95D-D7A49E398FAA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +49,14 @@ Global
 		{9254A740-C786-4C7A-894A-01BCC0F7EF96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9254A740-C786-4C7A-894A-01BCC0F7EF96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9254A740-C786-4C7A-894A-01BCC0F7EF96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C47FE0C-9F97-403C-8A9F-BA820581FF81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C47FE0C-9F97-403C-8A9F-BA820581FF81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C47FE0C-9F97-403C-8A9F-BA820581FF81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C47FE0C-9F97-403C-8A9F-BA820581FF81}.Release|Any CPU.Build.0 = Release|Any CPU
+		{368E618F-4A97-40E1-B95D-D7A49E398FAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{368E618F-4A97-40E1-B95D-D7A49E398FAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{368E618F-4A97-40E1-B95D-D7A49E398FAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{368E618F-4A97-40E1-B95D-D7A49E398FAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

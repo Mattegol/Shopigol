@@ -29,6 +29,7 @@ namespace Shopigol.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(ProductCategory productCategory)
         {
             if (!ModelState.IsValid)
@@ -55,6 +56,7 @@ namespace Shopigol.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(ProductCategory productCategory)
         {
             var productCategoryToEdit = _productCategoryRepository.Find(productCategory.Id);
@@ -89,6 +91,7 @@ namespace Shopigol.WebUI.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public IActionResult ConfirmDelete(string id)
         {
             var productCategoryToDelete = _productCategoryRepository.Find(id);

@@ -43,6 +43,7 @@ namespace Shopigol.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(Product product, IFormFile file)
         {
             if (!ModelState.IsValid)
@@ -93,6 +94,7 @@ namespace Shopigol.WebUI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Edit(Product product, IFormFile file)
         {
             var productToEdit = _productRepository.Find(product.Id);
@@ -148,6 +150,7 @@ namespace Shopigol.WebUI.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
+        [ValidateAntiForgeryToken]
         public IActionResult ConfirmDelete(string id)
         {
             var productToDelete = _productRepository.Find(id);
