@@ -147,5 +147,12 @@ namespace Shopigol.Services
 
             return viewModel;
         }
+
+        public void ClearBasket(HttpContext httpContext)
+        {
+            var basket = GetBasket(httpContext, false);
+            basket.BasketItems.Clear();
+            _basketRepository.Commit();
+        }
     }
 }

@@ -45,9 +45,10 @@ namespace Shopigol.WebUI
             services.AddScoped<IRepository<Basket>, SqlRepository<Basket>>();
             services.AddScoped<IRepository<BasketItem>, SqlRepository<BasketItem>>();
             services.AddScoped<IRepository<Customer>, SqlRepository<Customer>>();
+            services.AddScoped<IRepository<Order>, SqlRepository<Order>>();
+            services.AddScoped<IRepository<OrderItem>, SqlRepository<OrderItem>>();
             services.AddScoped<IBasketService, BasketService>();
-
-
+            services.AddScoped<IOrderService, OrderService>();
 
             services.AddMvc();
         }

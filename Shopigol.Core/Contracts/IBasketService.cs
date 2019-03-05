@@ -13,5 +13,7 @@ namespace Shopigol.Core.Contracts
         List<BasketItemViewModel> GetBasketItems(HttpContext httpContext);
 
         BasketSummaryViewModel GetBasketSummary(HttpContext httpContext);
+
+        void ClearBasket(HttpContext httpContext);
     }
 }
