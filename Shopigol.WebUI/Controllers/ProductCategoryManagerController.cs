@@ -2,9 +2,11 @@
 using Shopigol.Core.Contracts;
 using Shopigol.Core.Models;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Shopigol.WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductCategoryManagerController : Controller
     {
         private readonly IRepository<ProductCategory> _productCategoryRepository;

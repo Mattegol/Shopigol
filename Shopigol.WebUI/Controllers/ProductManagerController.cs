@@ -6,9 +6,11 @@ using Shopigol.Core.Models;
 using Shopigol.Core.ViewModels;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Shopigol.WebUI.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductManagerController : Controller
     {
         private readonly IRepository<Product> _productRepository;
