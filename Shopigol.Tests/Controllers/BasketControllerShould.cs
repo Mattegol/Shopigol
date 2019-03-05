@@ -6,6 +6,8 @@ using Shopigol.Core.Models;
 using Shopigol.Core.ViewModels;
 using Shopigol.WebUI.Controllers;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Security.Principal;
 using Xunit;
 
 namespace Shopigol.Tests.Controllers
@@ -14,6 +16,8 @@ namespace Shopigol.Tests.Controllers
     {
         private readonly Mock<IBasketService> _basketService;
         private readonly Mock<IOrderService> _orderService;
+        private readonly Mock<IPrincipal> _mockPrincipal;
+        private readonly Mock<IRepository<Customer>> _customerRepository;
         private readonly Mock<IRepository<Product>> _productRepository;
         private readonly Mock<IRepository<Basket>> _basketRepository;
         private readonly Mock<IRepository<Order>> _orderRepository;
@@ -21,12 +25,14 @@ namespace Shopigol.Tests.Controllers
 
         public BasketControllerShould()
         {
+            _mockPrincipal = new Mock<IPrincipal>();
+            _customerRepository = new Mock<IRepository<Customer>>();
             _productRepository = new Mock<IRepository<Product>>();
             _basketRepository = new Mock<IRepository<Basket>>();
             _orderRepository = new Mock<IRepository<Order>>();
             _basketService = new Mock<IBasketService>();
             _orderService = new Mock<IOrderService>();
-            _sut = new BasketController(_basketService.Object, _orderService.Object);
+            _sut = new BasketController(_basketService.Object, _orderService.Object, _customerRepository.Object);
         }
 
         [Fact]
@@ -99,6 +105,39 @@ namespace Shopigol.Tests.Controllers
 
             var order = new Order();
             _orderService.Setup(x => x.CreateOrder(order, basketItems));
+
+            var customer = new Customer
+            {
+                Id = "1",
+                Email = "john.doe@shopigol.com",
+                City = "Stockholm"
+            };
+
+            _customerRepository.Setup(x => x.Add(customer));
+
+            var claims = new List<Claim>()
+            {
+                new Claim(ClaimTypes.Name, customer.Email),
+                new Claim(ClaimTypes.NameIdentifier, "1"),
+                new Claim("name", customer.Email),
+            };
+            var identity = new ClaimsIdentity(claims, "TestAuthType");
+            var claimsPrincipal = new ClaimsPrincipal(identity);
+
+
+            _mockPrincipal.Setup(x => x.Identity).Returns(identity);
+            _mockPrincipal.Setup(x => x.IsInRole(It.IsAny<string>())).Returns(true);
+
+            var mockHttpContext = new Mock<HttpContext>();
+            mockHttpContext.Setup(m => m.User).Returns(claimsPrincipal);
+
+            var context = new ControllerContext
+            {
+                HttpContext = mockHttpContext.Object
+            };
+
+            // Then set it to controller before executing test
+            _sut.ControllerContext = context;
 
             // Act
 
