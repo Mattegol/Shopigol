@@ -7,5 +7,11 @@ namespace Shopigol.Core.Contracts
     public interface IOrderService
     {
         void CreateOrder(Order order, List<BasketItemViewModel> basketItems);
+
+        List<Order> GetOrderList();
+
+        Order GetOrder(string id);
+
+        void UpdateOrder(Order order);
     }
 }

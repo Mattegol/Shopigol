@@ -2,6 +2,7 @@
 using Shopigol.Core.Models;
 using Shopigol.Core.ViewModels;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Shopigol.Services
 {
@@ -29,6 +30,22 @@ namespace Shopigol.Services
             }
 
             _orderContext.Add(order);
+            _orderContext.Commit();
+        }
+
+        public List<Order> GetOrderList()
+        {
+            return _orderContext.Collection().ToList();
+        }
+
+        public Order GetOrder(string id)
+        {
+            return _orderContext.Find(id);
+        }
+
+        public void UpdateOrder(Order order)
+        {
+            _orderContext.Update(order);
             _orderContext.Commit();
         }
     }

@@ -79,14 +79,5 @@ namespace Shopigol.WebUI
             });
         }
 
-        //public void ConfigureContainer(IUnityContainer container)
-        //{
-        //    container.RegisterType<IRepository<Product>, SqlRepository<Product>>();
-        //    container.RegisterType<IRepository<ProductCategory>, SqlRepository<ProductCategory>>();
-        //    container.RegisterType<IRepository<Basket>, SqlRepository<Basket>>();
-        //    container.RegisterType<IRepository<BasketItem>, SqlRepository<BasketItem>>();
-        //    container.RegisterType<IRepository<Customer>, SqlRepository<Customer>>();
-        //    container.RegisterType<IBasketService, BasketService>();
-        //}
     }
 }

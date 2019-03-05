@@ -1,0 +1,74 @@
+﻿@model Shopigol.Core.Models.Order
+
+@{
+    ViewData["Title"] = "Update Order";
+}
+
+<h2>Update Order</h2>
+
+<hr />
+<div class="row">
+
+    <form asp-action="UpdateOrder">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="OrderStatus" class="control-label"></label>
+                <select asp-for="OrderStatus" class="form-control">
+                    <option value="Order Created">Order Created</option>
+                    <option value="Payment Processed">Payment Processed</option>
+                    <option value="Order Shipped">Order Shipped</option>
+                    <option value="Order Complete">Order Created</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="LastName" class="control-label"></label>
+                <input asp-for="LastName" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" asp-format="{0:yyyy-MM-dd HH:mm}" disabled="disabled" class="form-control" />
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Street" class="control-label"></label>
+                <input asp-for="Street" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="State" class="control-label"></label>
+                <input asp-for="State" class="form-control" disabled="disabled" />
+            </div>
+            <div class="form-group">
+                <label asp-for="ZipCode" class="control-label"></label>
+                <input asp-for="ZipCode" class="form-control" disabled="disabled" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+        <div class="col-md-12">
+            @await Html.PartialAsync("OrderItems", Model.OrderItems)
+        </div>
+    </form>
+    <div class="col-md-12">
+        <a asp-action="Index" class="btn btn-default">Back to Orders</a>
+    </div>
+</div>
+
+
+
